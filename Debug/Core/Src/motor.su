@@ -1,0 +1,10 @@
+motor.cpp:62:6:void motor_pins_setup()	8	static
+motor.cpp:70:6:void encoder_setup()	8	static
+motor.cpp:81:6:void pid_setup()	16	static
+motor.cpp:91:6:void motor_Init()	8	static
+motor.cpp:97:6:void motor1_set_speed(int16_t)	16	static
+motor.cpp:114:6:void motor2_set_speed(int16_t)	16	static
+motor.cpp:132:6:void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef*)	16	static
+motor.cpp:153:6:void encoder_loop()	16	static
+motor.cpp:191:1:void __static_initialization_and_destruction_0(int, int)	48	static
+motor.cpp:191:1:cpp)	8	static
