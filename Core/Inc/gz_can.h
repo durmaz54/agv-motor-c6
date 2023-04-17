@@ -16,14 +16,13 @@
 
 
 #include "stm32f1xx_hal.h"
-#include "stdlib.h"
 
 
 #define CAN_DEADTIME 3000 //millisecond
 
 #define MYSTDID 0x010
 //10
-#define OTHERSTDID 0x016
+#define OTHERSTDID 0x017
 
 extern CAN_HandleTypeDef hcan;
 
@@ -40,7 +39,7 @@ void GZ_CAN_Init();
 
 void GZ_CAN_Transmit(struct MOTOR motorx);
 
-double GZ_CAN_Receive();
+void GZ_CAN_Receive(float *m1speed, float *m2speed);
 
 
 

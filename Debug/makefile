@@ -76,7 +76,7 @@ main-build: agv_v2_c6.elf secondary-outputs
 
 # Tool invocations
 agv_v2_c6.elf: $(OBJS) $(USER_OBJS) C:\Users\abdul\Desktop\guzergah-agv\agv_v2_c6\STM32F103C6TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-g++ -o "agv_v2_c6.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\abdul\Desktop\guzergah-agv\agv_v2_c6\STM32F103C6TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="agv_v2_c6.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -u _printf_float -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+	arm-none-eabi-g++ -o "agv_v2_c6.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\abdul\Desktop\guzergah-agv\agv_v2_c6\STM32F103C6TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="agv_v2_c6.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

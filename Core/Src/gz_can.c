@@ -9,6 +9,7 @@
 
 
 
+
 static CAN_TxHeaderTypeDef myTxHeader;
 static CAN_RxHeaderTypeDef myRxHeader;
 static uint8_t rxData[8] = { 0 };
@@ -23,8 +24,8 @@ void GZ_CAN_Init() {
 	canfilterconfig.FilterBank = 10;
 	canfilterconfig.FilterFIFOAssignment = CAN_FILTER_FIFO0;
 	// değişken 16, id 11 bit olduğu için kaydırıyoruz.
-	canfilterconfig.FilterIdHigh = OTHERSTDID << 5;
-	canfilterconfig.FilterIdLow = 0x0000; // for ext id
+	canfilterconfig.FilterIdHigh = OTHERSTDID << 5; //OTHERSTDID << 5
+	canfilterconfig.FilterIdLow = 0x0000; // for ext id //0x0000
 	canfilterconfig.FilterMaskIdHigh = 0xFFFF << 5;
 	canfilterconfig.FilterMaskIdLow = 0xFFFF; // for ext id
 
@@ -79,15 +80,59 @@ void HAL_CAN_ErrorCallback(CAN_HandleTypeDef *hcan) {
 
 }
 
-double GZ_CAN_Receive() {
+float test(char *str) {
+    int precision = 2;
+  float result = 0.0;
+  int decimal = 0;
+  int divisor = 4; // değişiklik burada
+  int negative = 0;
+
+  if (*str == '-') {
+    negative = 1;
+    str++;
+  }
+
+  while (*str != '\0') {
+    if (*str >= '0' && *str <= '9') {
+      if (decimal == 0) {
+        result = result * 10.0 + (*str - '0');
+      } else {
+        result += (*str - '0') / (float)divisor; // değişiklik burada
+        divisor *= 10;
+      }
+    } else if (*str == '.') {
+      decimal = 1;
+    } else {
+      break;
+    }
+    str++;
+  }
+
+  if (negative == 1) {
+    result *= -1.0;
+  }
+
+
+  return result;
+}
+
+
+void GZ_CAN_Receive(float *m1speed, float *m2speed) {
 	dTime = HAL_GetTick();
-	double data = atof(rxData);
+	char motor1STR[4],motor2STR[4];
+	memcpy(motor1STR, &rxData,4);
+	memcpy(motor2STR, &rxData[4],4);
+
 
 	if(dTime-nowTime > CAN_DEADTIME){
-		return 0x00;
+		*m1speed = 0x00;
+		*m2speed = 0x00;
+	}
+	else{
+		*m1speed = test(motor1STR);
+		*m2speed = test(motor2STR);
 	}
 
-	return data;
 }
 
 void GZ_CAN_Transmit(struct MOTOR motorx) {
@@ -101,3 +146,4 @@ void GZ_CAN_Transmit(struct MOTOR motorx) {
 	HAL_CAN_AddTxMessage(&hcan, &myTxHeader, txdata, &txmailbox);
 
 }
+
